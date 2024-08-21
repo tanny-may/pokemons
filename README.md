@@ -23,7 +23,7 @@ https://tanny-may.github.io/pokemons/
 ## Запуск проекта
 1. Клонировать репозиторий
    ```sh
-   git clone https://github.com/tanny-may/зщлуьщты
+   git clone https://github.com/tanny-may/pokemons
    ```
 2. Установить пакеты
    ```sh
