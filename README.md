@@ -6,15 +6,13 @@ https://tanny-may.github.io/pokemons/
 ## О проекте
 Учебный React-проект страницы для ловли покемонов.
 
-![image](https://github.com/tanny-may/)
+![image](https://github.com/user-attachments/assets/2b81d10b-0222-4369-8523-ac0c2c55a343)
 
 ## Функционал
 Основные реализованные сценарии работы с сайтом:
 * поймать покемона
 * отпустить покемона
 * счётчик пойманных покемонов
-  
-![image](https://github.com/tanny-may/)
 
 ## Библиотеки
 При написании кода использовались библиотеки:
