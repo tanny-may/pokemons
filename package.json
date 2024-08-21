@@ -1,8 +1,11 @@
 {
   "name": "pokemons",
   "version": "0.1.0",
+  "homepage": "https://tanny-may.github.io/pokemons",
   "scripts": {
-    "start": "react-scripts start"
+    "start": "react-scripts start",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "private": true,
   "dependencies": {
@@ -10,6 +13,7 @@
     "react-dom": "^18.3.1"
   },
   "devDependencies": {
+    "gh-pages": "^6.1.1",
     "react-scripts": "5.0.1"
   },
   "browserslist": {
