@@ -1,0 +1,23 @@
+.pagination {
+    display: flex;
+    justify-content: space-between;
+    align-items: center
+}
+
+.paginationButton {
+    border-radius: 10px;
+    border: 0px;
+    cursor: pointer;
+    width: 100px;
+    height: 30px;
+    border-color: transparent;
+    font-weight: bold;
+}
+
+.paginationButton:hover {
+    background-color: yellow;
+}
+
+.pokemonsNumberText {
+    margin-right: 20px;
+}
