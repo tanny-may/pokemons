@@ -6,7 +6,7 @@ export function downloadPokemons(pageNumber, pageSize) {
 				pokemons: data.results.map((pokemon) => {
 					return {
 						name: pokemon.name,
-						id: pokemon.url.slice(34, -1),
+						id: Number(pokemon.url.slice(34, -1)),
 					};
 				}),
 				pokemonsNumber: data.count,
