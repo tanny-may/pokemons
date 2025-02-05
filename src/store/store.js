@@ -1,40 +1,68 @@
+import { createStore, combineReducers, applyMiddleware } from 'redux';
+import { loadFromLocalStorage, saveToLocalStorage } from '../domain/localstorage';
 import { caughtPokemonsReducer } from './caughtPokemonsReducer';
-import { paginationReducer } from './paginationReducer';
+import { changePageSize, paginationReducer } from './paginationReducer';
+import { pokemonPageReducer } from './pokemonPageReducer';
 import { pokemonsReducer } from './pokemonsReducer';
-import { createStore, combineReducers,applyMiddleware } from 'redux';
-
-// const defaultState = {
-//     pokemons: [],
-//     caughtPokemons: [],
-//     pagination: {
-//       pageNumber: 0,
-//       pageSize: 12,
-//       pokemonsCount: 0,
-//     },
-// };
+import { downloadPokemonsThunk } from './downloadPokemonsThunk';
 
 const reducer = combineReducers({
 	caughtPokemons: caughtPokemonsReducer,
 	pagination: paginationReducer,
 	pokemons: pokemonsReducer,
+	pokemonPage: pokemonPageReducer,
 });
 
-// middleware
-// react router страница про покемона
+const persistedState = { caughtPokemons: loadFromLocalStorage() };
 
-const m1 = storeApi => next => action => {
-	console.log("m1");
+const thunkMiddleware = (storeApi) => (next) => (action) => {
+	if (typeof action === 'function') {
+		action(storeApi.dispatch, storeApi.getState);
+	} else {
+		next(action);
+	}
+};
+
+const localStorageMiddleware = (store) => (next) => (action) => {
 	next(action);
-}
+	if (action.type === 'CATCH_OR_RELEASE_POKEMON') {
+		saveToLocalStorage(store.getState().caughtPokemons);
+	}
+};
 
-const m2 = storeApi => next => action => {
-	console.log("m2");
+const downloadPokemonsMiddleware = (store) => (next) => (action) => {
+	const prevPagination = store.getState().pagination.page;
 	next(action);
-}
+	const nextPagination = store.getState().pagination.page;
+	// console.log(store.getState());
+	if (prevPagination !== nextPagination) {
+		store.dispatch(downloadPokemonsThunk());
+	}
+	// if (
+	// 	action.type === 'INCREMENT_PAGE_NUMBER' ||
+	// 	action.type === 'DECREMENT_PAGE_NUMBER' ||
+	// 	action.type === 'CHANGE_PAGE_SIZE'
+	// ) {
+	// 	store.dispatch(downloadPokemonsThunk());
+	// }
+};
 
-const m3 = storeApi => next => action => {
-	console.log("m3");
-	next(action);
-}
+const composeEnhancers =
+	typeof window === 'object' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
+		? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({
+				// Specify extension’s options like name, actionsDenylist, actionsCreators, serialize...
+		  })
+		: compose;
 
-export const store = createStore(reducer, applyMiddleware(m1, m2, m3));
+const enhancer = composeEnhancers(applyMiddleware(thunkMiddleware, downloadPokemonsMiddleware, localStorageMiddleware));
+
+export const store = createStore(reducer, persistedState, enhancer);
+store.dispatch(downloadPokemonsThunk());
+
+// https://github.com/reduxjs/redux-devtools/tree/main/extension#installation
+
+// https://redux.js.org/api/createstore
+
+function createStore2(reducer, initialState) {
+	
+}

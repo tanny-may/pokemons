@@ -12,14 +12,13 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 
 const router = createBrowserRouter([
 	{
-		path: '/',
+		path: '/pokemons',
 		element: <App />,
 	},
-
 	{
-		path: '/:pokemonId',
+		path: '/pokemons/:pokemonId',
 		element: <Info />,
-		loader: async ({ params }) => await downloadPokemon(params.pokemonId),
+		// loader: async ({ params }) => await downloadPokemon(params.pokemonId),
 	},
 ]);
 

@@ -5,7 +5,8 @@ import { decrementPageNumber, incrementPageNumber } from '../store/paginationRed
 
 export function Pagination() {
 	const dispatch = useDispatch();
-	const { pageSize, pageNumber, pokemonsCount } = useSelector((state) => state.pagination);
+	const { pageSize, pageNumber} = useSelector((state) => state.pagination.page);
+	const pokemonsCount = useSelector((state) => state.pagination.pokemonsCount);
 	const lastPage = Math.floor(pokemonsCount / pageSize);
 
 	return (
